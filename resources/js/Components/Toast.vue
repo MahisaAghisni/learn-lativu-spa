@@ -4,12 +4,17 @@ defineProps({
         type: String,
         required: true,
     },
+
+    message: {
+        type: String,
+        default: "",
+    },
 });
 </script>
 
 <template>
     <div class="sticky-bottom">
-        <div class="toast-container bottom-0 end-0 m-3">
+        <div class="toast-container bottom-0 end-0 m-3" v-show="message">
             <div
                 class="toast align-items-center text-bg-success border-0"
                 :id="id"
@@ -19,7 +24,7 @@ defineProps({
             >
                 <div class="d-flex">
                     <div class="toast-body">
-                        Hello, world! This is a toast message.
+                        {{ message }}
                     </div>
                     <button
                         type="button"
