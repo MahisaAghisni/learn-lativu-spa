@@ -1,5 +1,25 @@
+<script setup>
+import { useForm } from "@inertiajs/vue3";
+
+const form = useForm({
+    title: "",
+    body: "",
+});
+
+const emit = defineEmits(["success"]);
+
+const submit = () => {
+    form.post(route("questions.store"), {
+        onSuccess: () => {
+            form.reset();
+            emit("success");
+        },
+    });
+};
+</script>
+
 <template>
-    <form>
+    <form @submit.prevent="submit">
         <div class="row mb-3">
             <div class="col-7">
                 <label for="question-title" class="form-label"
@@ -8,9 +28,16 @@
                 <input
                     type="text"
                     class="form-control"
+                    :class="{
+                        'is-invalid': form.errors.title,
+                    }"
+                    v-model="form.title"
                     name="title"
                     id="question-title"
                 />
+                <div class="invalid-feedback" v-if="form.errors.title">
+                    {{ form.errors.title }}
+                </div>
             </div>
             <div class="col-5">
                 <label for="question-tags" class="form-label">Tags</label>
@@ -62,9 +89,22 @@
                             aria-labelledby="write-tab"
                             tabindex="0"
                         >
-                            <textarea rows="7" class="form-control" name="body">
-                                            hit there</textarea
+                            <textarea
+                                rows="7"
+                                class="form-control"
+                                :class="{
+                                    'is-invalid': form.errors.body,
+                                }"
+                                v-model="form.body"
+                                name="body"
                             >
+                            </textarea>
+                            <div
+                                class="invalid-feedback"
+                                v-if="form.errors.body"
+                            >
+                                {{ form.errors.body }}
+                            </div>
                         </div>
                         <div
                             class="tab-pane fade show"
@@ -79,15 +119,15 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-grid">
+        <div class="d-flex justify-content-end">
             <button
                 type="button"
-                class="btn btn-outline-secondary"
+                class="btn btn-outline-secondary me-2"
                 data-bs-dismiss="modal"
             >
                 Close
             </button>
-            <button type="button" class="btn btn-primary">Post</button>
+            <button type="submit" class="btn btn-primary">Post</button>
         </div>
     </form>
 </template>

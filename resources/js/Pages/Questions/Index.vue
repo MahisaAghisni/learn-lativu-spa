@@ -66,7 +66,7 @@
             size="large"
             scrollable
         >
-            <QuestionForm />
+            <QuestionForm @success="hideModal" />
         </Modal>
     </AppLayout>
 
