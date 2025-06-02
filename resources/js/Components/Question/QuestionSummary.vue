@@ -62,10 +62,7 @@ const emit = defineEmits(["edit", "remove"]);
                         >
                     </div>
                 </div>
-                <ActionButtons
-                    @edit="emit('edit', question)"
-                    @remove="emit('remove', question)"
-                />
+                <ActionButtons @edit="emit('edit', question)" />
             </div>
         </div>
     </li>
